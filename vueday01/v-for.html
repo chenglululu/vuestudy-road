@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p v-for="(item,index) in list">值：{{item}} --- 索引：{{index}}</p>
+        <hr>
+        <!-- 循环对象数组 -->
+        <p v-for="(user,index) in list1">索引值：{{index}} -- id:{{user.id}} -- name:{{user.name}}</p>
+        <hr>
+        <!-- 循环对象  注意:在遍历对象身上的键值对的时候，除了有val和key之外在第三个位置还有一个索引 -->
+        <p v-for="(val,key,index) in user">值：{{val}} -- 键：{{key}} -- 索引：{{index}}</p>
+        <hr>
+        <!-- 迭代数字 注意：如果使用v-for迭代数字，循环从1开始！ -->
+        <p v-for="count in 10">第{{count}}次循环</p>
+        <hr>
+        <div>
+            <label>
+                Id: <input type="text" v-model="id">
+            </label>
+            <label>
+                    Name: <input type="text" v-model="name">
+                </label>
+                <input type="button" value="添加" @click="click">
+        </div>
+        <!-- 注意：v-for循环的时候，key属性只能使用number获取string -->
+        <!-- 注意：key在使用的时候，必须使用v-bind属性绑定的形式，指定key的值 -->
+        <!-- 在组件中，使用v-for循环的时候，或者在一些特殊情况中，如果v-for有问题，必须在使用
+        v-for的同时，指定唯一的 字符串/数字 类型：key值 -->
+        <p v-for="item in list2" :key="item.id">
+            <input type="checkbox">
+            id:{{item.id}} -- name:{{item.name}}
+        </p>
+    </div>
+    <script>
+       new Vue({
+        el:"#app",
+        data:{
+            list:[1,2,3,4,5,6],
+            list1:[
+                {id:1,name:'zs1'},
+                {id:2,name:'zs2'},
+                {id:3,name:'zs3'},
+                {id:4,name:'zs4'}
+            ],
+            user:{
+                id:1,
+                name:'tom',
+                gender:'男'
+            },
+            id:" ",
+            name:" ",
+            list2:[
+                {id:1,name:'zs'},
+                {id:2,name:'ls'},
+                {id:3,name:'zw'},
+                {id:4,name:'zss'},
+                {id:5,name:'tom'}
+            ]
+        },
+        methods: {
+            click(){
+                /* 在数组前面添加 */
+                this.list2.unshift({id:this.id,name:this.name})
+            }
+        },
+       })
+    </script>
+</body>
+</html>

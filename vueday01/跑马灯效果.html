@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">   
+        <button @click="rop">moving!!</button>
+        <button @click="stop">stop</button>
+        <p>{{msg}}</p>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:"#app",
+            data:{
+                msg:'爱国敬业自由平等公正法治',
+                timeId:null
+            },
+            methods:{
+                rop(){
+                    clearInterval(this.timeId)
+                    this.timeId = setInterval(() => {
+                    let start = this.msg.substring(0,1);
+                    let end = this.msg.substring(1);
+                    this.msg = end+start
+                    },200)
+                    
+                },
+                stop(){
+                    clearInterval(this.timeId)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

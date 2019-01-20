@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 对象就是无序键值对的集合 -->
+        <h1 :style="{color:'red','font-weight':'200'}">这是一个h1标签</h1>
+
+        <h1 :style="styleobj1">这是一个h1标签</h1>
+        
+        <h1 :style="[styleobj1,styleobj2]">这是一个h1标签</h1>
+    </div>
+    <script>
+        let vm = new Vue({
+            el:"#app",
+            data:{
+                styleobj1:{color:'red','font-weight':'200'},
+                styleobj2:{'font-style':'italic'},
+            },
+            methods: {
+                
+            },
+        })
+    </script>
+</body>
+</html>

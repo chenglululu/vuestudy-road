@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+    <style>
+        .first{
+            background-color: #acc;
+            width: 200px;
+            height: 100px;
+        }
+        .div2{
+            background-color: #eee;
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 使用 stop 阻止冒泡事件 -->
+        <!-- <div class="first" @click="div1">
+            <button v-text="msg" @click.stop="btn"></button>
+        </div> -->
+
+        <!-- .prevent 阻止默认行为 -->
+        <!-- <a href="http://www.baidu.com" @click.prevent="link">{{msg1}}</a> -->
+
+        <!-- 使用 .self 实现只有点击当前元素时候，才会触发事件处理函数 
+            只会阻止自己身上冒泡行为的触发，并不会真正阻止 冒泡的行为 -->
+        <!-- <div class="first" @click.self="div1">
+            <button @click="btn">{{msg}}</button>
+        </div> -->
+    
+    <!-- <div class="div2" @click="div2">
+            <div class="first" @click.self="div1">
+                <button @click="btn">{{msg}}</button>
+            </div>
+        </div> -->
+        <!-- 使用 .once 只触发一次事件处理函数 -->
+    <!-- <div class="div2" @click="div2">
+            <div class="first" @click.once="div1">
+                <button @click="btn">{{msg}}</button>
+            </div>
+        </div> -->
+
+          <!-- 使用  .capture 实现捕获触发事件的机制 -->
+    <div class="first" @click.capture="div1">
+      <input type="button" value="戳他" @click="btn">
+    </div>
+    </div>
+
+    <script>
+        let vm = new Vue({
+            el:"#app",
+            data:{
+                msg:'点击按钮触发事件',
+                msg1:'有问题先百度'
+            },
+            methods: {
+                div1(){
+                    console.log("div 被触发了")
+                },
+                btn(){
+                    console.log("btn 被触发了")
+                },
+                link(){
+                    console.log('触发了连接的点击事件')
+                },
+                div2(){
+                    console.log("触发了外层div的点击事件")
+                }
+            },
+        })
+    </script>
+</body>
+</html>
