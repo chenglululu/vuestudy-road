@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        li{
+            border: 1px solid #acc;
+            width:200px;
+            background-color: #eee;
+            text-align: center;
+        }
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateY(30px)
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 1s ease-in-out;
+        }
+        .v-move{
+            transition: all 1s ease-in-out;
+        }
+        .v-leave-active{
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <label>
+            Id: <input type="text" v-model="id">
+        </label>
+        <label>
+            Name: <input type="text" v-model="name" @keydown.enter="add">
+        </label>
+        <input type="button" value="添加" @click="add">
+        <transition-group tag="ul" >
+            <li v-for="(item, index) in figure" :key="item.id" @click="del(index)">
+                {{ item.id }} ---{{ item.name }}
+            </li>
+        </transition-group>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                id:"",
+                name:"",
+                figure:[
+                    {id:1,name:'董新林'},
+                    {id:2,name:'吴咏晟'},
+                    {id:3,name:'严洋洋'},
+                    {id:4,name:'咩咩咩'}
+                ]
+            },
+            methods: {
+                add(){
+                    this.figure.push({id:this.id,name:this.name})
+                    this.id=this.name=" "
+                },
+                del(index){
+                    this.figure.splice(index,1)
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

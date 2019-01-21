@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        .v-enter{
+            opacity: 0;
+            transform: translateX(150px)
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 1s ease;
+        }
+        .v-leave-to{
+            opacity:0;
+            transform: translateY(200px)
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="moving" @click="flag=!flag">
+        <transition>
+            <h4 v-show="flag">你看不见我啦</h4>
+        </transition>
+    </div>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                flag:false
+            },
+            methods: {
+                
+            },
+        })
+    </script>
+</body>
+</html>

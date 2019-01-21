@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <com></com>
+    </div>
+    <template id="comm">
+        <div>
+            <h1>这是组件的创建3</h1>
+            <p>hhhhhhh</p>
+        </div>
+    </template>
+    
+    <script>
+        
+        // var comm = Vue.extend({
+        //     template:"<h1> 这是组件的创建1 </h1>"
+        // })
+        // Vue.component('com',comm)
+
+        // Vue.component('com', {
+        //     template:"<h2>这是组件的创建2</h2>"
+        // })
+
+        Vue.component('com',{
+            template:"#comm"
+        })
+        new Vue({
+            el:"#app",
+            data:{ },
+            methods: {
+                
+            },
+        })
+    </script>
+</body>
+</html>

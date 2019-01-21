@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        .v-enter{
+            opacity: 0;
+            transform: translateX(150px)
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 1s ease-in-out;
+        }
+        .v-leave-to{
+            opacity: 0;
+            transform: translateY(150px)
+        }
+
+        .fade-enter{
+            opacity: 0;
+            transform: translateX(150px)
+        }
+        .fade-enter-active,
+        .fade-leave-active{
+            transition: all 1s ease-in-out;
+        }
+        .fade-leave-to{
+            opacity: 0;
+            transform: translateY(150px)
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="moving" @click="flag=!flag">
+        <transition>
+            <h3 v-show="flag">这是一个普通动画</h3>
+        </transition>
+    </div>
+    <br><br><br><br><br><br>
+    <div id="app2">
+        <input type="button" value="动起来！" @click="isshow=!isshow">
+        <transition name="fade">
+            <h4 v-if="isshow">改变了类名的动画</h4>
+        </transition>
+    </div>
+    <script>
+
+        new Vue({
+            el: "#app",
+            data: {
+                flag: false
+            },
+            methods: {},
+        })
+
+        new Vue({
+            el:"#app2",
+            data:{
+                isshow: false
+            },
+            methods:{ }
+        })
+    </script>
+</body>
+
+</html>

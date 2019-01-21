@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <script src="./lib/vue-resource-1.3.4.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+<body>
+    <div id="app">
+        
+        <div class="panel panel-info">
+              <div class="panel-heading">
+                    <h3 class="panel-title">添加品牌</h3>
+              </div>
+              <div class="panel-body">
+                    <label>
+                        Name: <input type="text" v-model="name" @keyup.enter="add" autofocus="autofocus">
+                    </label>
+                    <input type="button" value="添加" @click="add">
+              </div>
+        </div>
+        
+        <table class="table table-hover table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in tabulation" :key="index">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.ctime }}</td>
+                    <td>
+                        <a href="" @click.prevent = "del(item.id)">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
+    </div>
+    <script>
+        Vue.http.options.root="http://vue.lovegf.cn:8899/api"
+        Vue.http.options.emulateJSON = true
+        new Vue({
+            el:"#app",
+            data:{ 
+                name:"",
+                tabulation:[
+                    // {id:1,name:'董新林',ctime: new Date( )},
+                    // {id:1,name:'吴咏晟',ctime: new Date( )},
+                    // {id:1,name:'严洋洋',ctime: new Date( )},
+                ],
+            },
+            created() {
+                this.getAllList()
+            },
+            methods: {
+                getAllList(){
+                    this.$http.get('getprodlist').then( result => {
+                        // console.log(result)
+                        if(result.body.status === 0){
+                            this.tabulation = result.body.message.slice(result.body.message.length - 10,result.body.message.length)
+                            this.name = " "
+                        }else{
+                            alert("添加失败！")
+                        }
+                    })
+                },
+                add(){
+                    this.$http.post('addproduct',{name:this.name}).then(result => {
+                        // console.log(result)
+                        if(!this.name.trim()) return alert("请输入内容！")
+                        if(result.body.status === 0){
+                            this.getAllList()
+                        }else{
+                            alert("添加失败！！")
+                        }
+                    })
+                },
+                del(id){
+                    this.$http.get('delproduct/' + id).then(result => {
+                        // console.log(result)
+                        if(result.body.status === 0){
+                            this.getAllList()
+                        }else{
+                            alert("删除失败！")
+                        }
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>

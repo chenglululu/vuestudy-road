@@ -56,14 +56,16 @@
     </div>
 
     <script>
+        Vue.http.options.root='http://vue.lovegf.cn:8899/api'
+        Vue.http.options.emulateJSON = true
         new Vue({
             el: "#app",
             data: {
                 name: "",
                 keywords: "",
                 list: [
-                    { id: 1, name: '奔驰', ctime: new Date() },
-                    { id: 2, name: '宝马', ctime: new Date() }
+                    // { id: 1, name: '奔驰', ctime: new Date() },
+                    // { id: 2, name: '宝马', ctime: new Date() }
                 ]
             },
             created() {// 当 vm 实例 的 data 和 methods 初始化完毕后，vm实例会自动执行created 这个生命周期函数
@@ -72,19 +74,21 @@
             methods: {
 
                 getAllList() {
-                    this.$http.get('http://vue.lovegf.cn:8899/api/getprodlist').then(result => {
-                        this.list = result.body.message
+                    this.$http.get('getprodlist').then(result => {
+                        this.list = result.body.message.slice(result.body.message.length-10,result.body.message.length)
                     })
                 },
                 add() {
-                    this.$http.post('http://vue.lovegf.cn:8899/api/addproduct', { name: this.name }, { emulateJSON: true }).then(result => {
+                    if(!this.name.trim()) return alert("请输入品牌名称！")
+                    this.$http.post('addproduct', { name: this.name }).then(result => {
                         // console.log(result)
                         this.getAllList()
                         this.name = ""
                     })
                 },
                 del(id) {
-                    this.$http.get(`http://vue.lovegf.cn:8899/api/delproduct/` + id).then(result => {
+                    
+                    this.$http.get(`delproduct/` + id).then(result => {
                         if (result.body.status === 0) {
                             // console.log(result)
                             this.getAllList()

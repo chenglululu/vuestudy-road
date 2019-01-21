@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <style>
+        .red{
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="小圆点动起来啦" @click="flag=!flag">
+        <transition  
+            @before-enter="beforeEnter"
+            @enter="enter"
+            @after-enter="afterEnter">
+            <div class="red" v-show="flag"></div>
+        </transition>
+    </div>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                flag:false
+             },
+            methods: {
+                beforeEnter(el){  //beforeEnter 表示动画入场之前，此时，动画尚未开始，可以 在 beforeEnter 中，设置元素开始动画之前的起始样式
+                    el.style.transform = "translate(0,0)"
+                },
+                enter(el,done){
+                    el.offsetTop        //强制刷新动画，必须写！
+                    el.style.transform = "translate(150px,310px)"
+                    el.style.transition = "all 1s ease"
+                    done()
+                },
+                afterEnter(el){
+                    this.flag = !this.flag
+                }
+             },
+        })
+    </script>
+</body>
+</html>
