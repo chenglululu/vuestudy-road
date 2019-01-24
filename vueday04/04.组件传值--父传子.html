@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 父组件，可以在引用子组件的时候， 通过 属性绑定（v-bind:） 的形式, 
+        把 需要传递给 子组件的数据，以属性绑定的形式，传递到子组件内部，供子组件使用 -->
+        <comfristname v-bind:comname="datamsg"></comfristname>
+    </div>
+    <template id="tmpl">
+        <div>
+            <h3>7777 -- {{msg}}</h3>
+            <h2>{{comname}}</h2>
+        </div>
+    </template>
+    <script>
+        Vue.component('comfristname',{
+            template:'#tmpl',
+            data() {
+                return {
+                    msg:'6666 '
+                }
+            },
+            //把父组件传递过来的 comname 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
+            props:['comname'] 
+        })
+        new Vue({
+            el:'#app',
+            data:{
+                datamsg:"1111 这是父组件上的数据"
+             },
+            methods:{ },
+        })
+    </script>
+</body>
+</html>

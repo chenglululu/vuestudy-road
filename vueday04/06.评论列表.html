@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-3.3.7.css">
+</head>
+<body>
+    <div id="app">
+   
+        <com1 @func='getlist'></com1>
+   
+   <ul class="list-group">
+       <li class="list-group-item" v-for="(item, index) in list" :key="index">
+        <span class="badge">评论人：{{ item.users }}</span>
+        {{ item.content }}
+       </li>
+   </ul>
+    </div>
+
+    <template id="tmpl">
+        <div>
+           <div class="form-group">
+                <label>评论人：</label>
+                <input type="text" class="form-control" v-model="users"> 
+           </div>
+           <div class="form-group">
+                <label>评论内容：</label>
+                <textarea class="form-control" v-model="content" @keyup.enter="myclick"></textarea>
+           </div>
+           <div class="form-group">
+               <input type="button" value="添加评论" class="btn btn-primary" @click="myclick"> 
+           </div>
+        </div>
+    </template>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                list:[
+                    {id:Date.now(), users:'李四',content:'6666'},
+                    {id:Date.now(), users:'tom',content:'7777'},
+                    {id:Date.now(), users:'jack',content:'8888'}
+                ]
+            },
+            methods: {
+                getlist(){
+                    this.list = JSON.parse(localStorage.getItem('mie') || '[]')
+                }
+            },
+            components:{
+                com1:{
+                    template:'#tmpl',
+                    data(){
+                        return {users:'',content:''}
+                    },
+                    methods: {
+                        myclick(){
+                            var datalist = { id:Date.now(),users:this.users,content:this.content }
+                            // 从 localStorage 中获取所有的评论
+                            var list = JSON.parse(localStorage.getItem('mie') || '[]')
+                            list.unshift(datalist)   //追加到datalist的最前面
+                            //重新保存最新的评论数据
+                            localStorage.setItem('mie',JSON.stringify(list))
+                            this.users=this.content=" "
+                            this.$emit('func')
+                        }
+                    },
+                }
+            },
+            created() {
+                this.getlist()
+            },
+        })
+    </script>
+</body>
+</html>
