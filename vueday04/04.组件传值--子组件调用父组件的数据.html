@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+        <comp v-bind:comname="giveson"></comp>
+    </div>
+    <template id="tmpl">
+        <div>
+            <h3>这是子组件里面的内容</h3>
+            <h1>{{comname}}</h1>
+        </div>
+    </template>
+    <script>
+        Vue.component('comp',{
+            template:'#tmpl',
+            methods:{
+
+            },
+            //把父组件传递过来的 comname 属性，先在 props 数组中，定义一下，这样，才能使用这个数据
+            props:['comname']
+        })
+        new Vue({
+            el:"#app",
+            data:{
+                giveson:'把这个数据传递给子组件'
+             },
+            methods: {
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./lib/vue-2.4.0.js"></script>
+</head>
+<body>
+    <div id="app">
+     <com v-bind:comname="giveson"></com>
+    </div>
+   <template id="tmpl">
+       <div>
+           <p>这是子组件的内容</p>
+           <h2>{{comname}}</h2>
+       </div>
+   </template>
+    <script>
+        var com = {
+            template:"#tmpl",
+            data() {
+                return {
+                    
+                }
+            },
+            props:['comname']
+        }
+       new Vue({
+           el:"#app",
+           data:{ 
+               giveson:"把这里的数据给子组件"
+           },
+           methods: {
+               
+           },
+           components:{
+               com
+           }
+       })
+    </script>
+</body>
+</html>
